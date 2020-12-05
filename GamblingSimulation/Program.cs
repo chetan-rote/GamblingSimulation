@@ -8,6 +8,7 @@ namespace GamblingSimulation
         public const int STAKE = 100;
         public const int BET = 1;
         public const float STAKE_VALUE = 0.5f;
+        public static int numOfDaysInMonth = 20;
         /*UC2 Win or Loose*/
         public static int WinOrLoose()
         {
@@ -18,7 +19,7 @@ namespace GamblingSimulation
         public static int WinOrLooseFiftyPercent()
         {
             int winningAmount, loosingAmount, stake;
-            loosingAmount = (int) Math.Round(STAKE * STAKE_VALUE);
+            loosingAmount = (int)Math.Round(STAKE * STAKE_VALUE);
             winningAmount = (int)Math.Round(STAKE + (STAKE * STAKE_VALUE));
             bool play = true;
             stake = STAKE;
@@ -38,6 +39,19 @@ namespace GamblingSimulation
             }
             return stake;
         }
+        /*UC4 Find Amount after 20 days of play.*/
+        public static int AmountForMonthOfPlay()
+        {
+            int totalDaysAmount = 0;
+            int outcome = 0;
+            int[,] daysOutCome = new int[20,2];
+            for (int day = 0; day < numOfDaysInMonth; day++)
+            {
+                int amountAfterPlay = WinOrLooseFiftyPercent();
+                totalDaysAmount += amountAfterPlay;
+            }
+            return totalDaysAmount;
+        }
         /// <summary>
         /// Defines the entry point of the application.
         /// </summary>
@@ -45,7 +59,8 @@ namespace GamblingSimulation
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to Gambling Simulation Problem.");
-            WinOrLooseFiftyPercent();            
+            int amountWonOrLoss = AmountForMonthOfPlay();
+            Console.WriteLine("Amount won or los for a month = " + amountWonOrLoss);
         }
     }
 }
